@@ -1,0 +1,17 @@
+第21章 ajax与comet
+
+XHR.open(method, url, isAsync)
+open()只是启动一个请求，并不会真正发送。
+
+XHR.send({ body } / null ) --> 真正发送。
+return: responseText, responseXML (if content-type= "text/xml"), status, statusText
+
+readyState // 0 1 2 3 4 --> readystatechange
+
+设置自定义的请求头部信息: setRequestHeader(), 注: 在open 和 send 之间调用才行
+
+GET请求: 每个parameter都需要用encodeURIComponent进行编码
+
+
+XMLHttpRequest 2级内容:
+FormData: var form = new FormData() //or form = new FormData(documents.forms[0])
