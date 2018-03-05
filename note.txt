@@ -15,3 +15,36 @@ GET请求: 每个parameter都需要用encodeURIComponent进行编码
 
 XMLHttpRequest 2级内容:
 FormData: var form = new FormData() //or form = new FormData(documents.forms[0])
+超时限定: 只有ie8支持。 xhr.timeout = 1000 xhr.ontimeout = function() {}
+overrideMimeType() 重写响应的mime类型，应用：如果返回xml而mime是text/plain，则responseXML为null，改写这个方法强制设置xml，
+（必须在send之间）
+进度事件：loadstart, progress, load, error, loadend
+onload(event) || onprogress(event) //event.target = xhr
+onprogress事件必须在open()方法前调用。
+
+跨域
+CORS （cross origin resource sharing, 跨源资源共享）：自定义http头部让浏览器和服务器之间沟通，从而决定是否响应请求。
+client: origin: http://www.baidu.com
+server: access-control-allow-origin: http://www.baidu.com
+请求和响应都不包括cookie信息。
+
+cors都是异步的，没有最后一个isAsync参数
+
+IE8对cors的实现：XDR (XDomainRequest)
+其他浏览器对cors的实现：直接用xhr就行。不用显式设置origin等。但是有一些限制：1.不能设置setRequestHeader() 2.不能设置cookie等。
+为了消除歧义，对本站资源用相对url，对不同源的才用绝对url。
+
+带凭据的请求: 如果发送的是带凭据带请求而响应中没有包含这个头部，则status = 0, responseText = empty, invoke onerror() event
+client: withCredentials: true (IE10以及更早版本都不支持)
+server: Allow-Control-Allow-Credentials: true
+
+其他跨域技术：（都是在cors被广泛运用之前）
+图像ping：最常用于跟踪用户点击页面或者动态广告曝光次数。缺点：只能发送GET，不能访问响应文本。
+JSONP: json with padding （see server.js + testJsonp.js + index.html）
+缺点: 如果响应中夹杂恶意代码，没有别的好的办法，只能放弃jsonp调用。2. 确定jsonp失败并不容易
+
+comet：和ajax相反，comet是服务器向客户端推送。e.g. 长轮询 和 流。
+长轮询：客户端发请求，服务器保持连接，有数据才发送响应，然后客户端立即再发请求。
+
+to be continued at 服务器发送事件 (p590)
+
