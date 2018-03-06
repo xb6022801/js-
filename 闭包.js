@@ -17,10 +17,25 @@ function father(name) {
 			
 		}(i)
 	}
-
 	return res
 }
 
 console.log(fn())
 
-//
+//包含html元素，无法被回收
+function assignHandler() {
+    var element = document.getElementById('id')
+    element.onclick = () => {
+      alert(element)
+    }
+}
+
+//该进
+function assignHandler() {
+    var element = document.getElementById('id')
+    var id = element.id
+    element.onclick = () => {
+      alert(id)
+    }
+    element = null
+}
