@@ -37,3 +37,6 @@ if (request) {
   }
   request.send(null)
 }
+
+//websocket
+var websocket = new WebSocket(absolute URL)
