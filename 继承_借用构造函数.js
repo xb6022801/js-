@@ -13,4 +13,4 @@ function SubType() {
 }
 
 var subInst = new SubType()
-console.log(subInst.getId()) // undefined 一大问题，并不能继承。导致函数复用不可行。
+console.log(subInst.getId()) // undefined 一大问题，并不能继承父类型原型对象的方法。导致函数复用不可行。
