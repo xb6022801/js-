@@ -118,3 +118,45 @@ IE的性能问题：IE的垃圾收集器是根据内存分配量运行的。
 globalVariable = null
 
 /************************END OF CHAPTER 4 *********************************/
+第六章：面向对象的程序设计
+
+对象: 数据属性: [[configurable, enumerable, writable, value]]
+Object.defineProperty(): 用该方法时，如果不指定，则configurable, enumerable, writable默认都是false
+
+访问器属性： getters, setters
+只指定getters意味着不能set value。
+
+定一个attribut时数据属性或者访问器属性只能任选其一。
+Object.getOwnPropertyDescriptor(Obj, attribut) 
+
+设计模式：
+工厂模式： 无需赘言
+构造函数模式: 无需赘言, (大写开头)， 要创建新实例，必须要new操作符。new的过程执行了以下4个步骤：
+- 新建对象
+- 将函数作用域赋给对象
+- 执行函数中的方法
+- 返回对象
+
+构造函数模式比工厂模式好，看（构造函数.js）
+构造函数和普通函数没有任何区别，区别只是new 不 new
+构造函数缺点： 每次新建实例都要新建内部函数
+
+原型模式： 
+每次新建实例，实例内部将包含一个指针指向构造函数的原型对象，初始情况下prototype只包含constructor
+console.log(Person.prototype.isPrototypeOf(obj1)) //true
+console.log(Object.getPrototypeOf(obj1))
+实例不能overwrite原型上的值。但是可以在自己的实例上覆盖这个词。
+
+in操作符： 所有enumerable = true的key都会显示, 
+不管是否在原型或者实例上，都是true： console.log('name' in person1),
+for..in: 对象上所有enumrable的属性，无论实例上或者原型上。
+Object.keys(): 实例上所有enumerable属性
+Object.getOwnPropertyNames(obj): 实例上无论enumerable与否的attribut，
+
+
+
+
+
+
+
+

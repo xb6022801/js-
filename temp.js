@@ -43,3 +43,23 @@ var array = [1, 3, 3, 5, 2, 2, 7, 8]
 // })
 
 console.log(array)
+
+var obj = { gender: 'male' }
+Object.defineProperty(obj, 'name', {
+  writable: false,
+  enumerable: false,
+  value: 'binbin'
+})
+
+console.log(obj.name)
+for ( key in obj ) {
+  console.log(key)
+  console.log(obj[key])
+}
+
+function person(name, gender) {
+  this.name = name
+  this.gender = gender
+}
+
+var newPerson = new person('xubin', 'male')
