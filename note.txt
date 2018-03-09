@@ -118,6 +118,7 @@ IE的性能问题：IE的垃圾收集器是根据内存分配量运行的。
 globalVariable = null
 
 /************************END OF CHAPTER 4 *********************************/
+
 第六章：面向对象的程序设计
 
 对象: 数据属性: [[configurable, enumerable, writable, value]]
@@ -173,10 +174,31 @@ Object.create(prototype, attributs): 依然会共享prototype的实例属性。
 寄生式继承
 组合寄生式继承 (组合寄生式继承.js) : 引用类型最理想的继承方式。
 
-总结: section 6.4, p174
+/************************END OF CHAPTER 6 *********************************/
 
+第8章： BOM
+ESCMScript是js的核心。web中的核心： BOM
+bom的核心：windows ：浏览器实例 + global对象。
 
+定义在windows上的变量可以delete： delete windows.value
+用var定义的全局变量configurable = false, 不可以delete
+top对象指向最高层框架 top.frames[0]
+parent指向当前框架的上层框架
 
+窗口位置
+修改窗口位置: window.moveTo(2 arguments), moveBy(): 往往被浏览器禁用，且只对最外层window有效。
+windows.screenLeft, screenTop (修改窗口.js)
 
+窗口大小：window.innerWidth (页面窗口大小)/ outerWidth （浏览器大小） (chrome里相同)
+viewport（视口大小）：标准模式下 document.documentElement.clientWidth / document.body.clientWidth
+window.open(,,,)
 
+(see 窗口位置.js)
+
+拦截窗口。windowx = window.open(,,,) 
+if (windowx == null) {
+  console.log('window is blocked!')
+}
+
+to be continued at 'Location'
 
