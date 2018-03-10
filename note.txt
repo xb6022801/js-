@@ -200,5 +200,90 @@ if (windowx == null) {
   console.log('window is blocked!')
 }
 
-to be continued at 'Location'
+location既是windows对象也是document对象。
+location.assign('url') --> window.location = '' / location.href = ''
+或者通过修改location点属性来更改url。每次更改都会重新加载url。（会添加浏览器记录，如果不需要，可以用replace代替assign）
+
+location.reload() //优先从缓存中加载
+location.reload(true) //强制从服务器加载
+
+navigator： 识别浏览器点事实标准
+screen对象: 用处不大，每个浏览器实现标准也不尽相同。screen.resizeTo(...) 默认一般也被禁止。
+
+history: window.history, 每个窗口，每个标签页的history都不同。
+history.go(-1 | 1 | 2)
+history.go('pornhub.com') //跳转到最近浏览过的包含该字符串的history
+history.back() / forward()
+
+/************************END OF CHAPTER 8 *********************************/
+第10章 DOM
+node: node.type 常用 node.type = NODE.ELEMENT_NODE (1) / NODE.TEXT_NODE (3)
+nodeName + nodeValue
+
+每个node都有: node.childNodes, 其中保存着一个NodeList对象。
+node.parentNode
+node.nextSibling / node.previousSibling
+node.firstChild = node.childNodes[0]
+同理 node.lastChild = node.childNodes[node.childNodes.length - 1]
+node.hasChildNodes() --> check if child nodes exist (1 or more)
+
+以上属性，只读
+
+node.appendChild()
+node.insertBefore(newNode, {}) // if args[1] = null, 成为最后一个节点。
+node.replaceNode(newNode, oldNode) // e.g. node.replaceNode(newNode, node.lastChild) : 替换最后一个节点。
+node.removeNode(nodeToReplace) // 被移除的node还存在，只是所有关系指针都被移除，在文档中已经没有了自己的位置。
+
+node.cloneNode(true | nothing) // true表示也复制子节点 （不复制js事件等属性，只复制node属性）复制前建议移除事件等 （因为IE有bug）
+
+Document类型 (子元素中Element最多一个: html)
+document (= window.document)
+document.documentElement --> <html>标签
+document.documentElement  == document.childNodes[0] == document.firstChild
+document.body (注意。body并不是document的childNode)
+
+document.title
+document.domain（可修改）/.URL (只读)/.referrer (只读)
+document.domain不能设置未跨越，但可以设置为子域。如果包含子框架，则可以将不同框架的domain设置为相同的domain来实现两者
+的js互通。
+
+document.getElementById
+document.getElementsByName
+document.getElementsByTagName: return HTMLCollection
+语法糖 document.anchors/.forms/.images/.links
+
+文档写入： document.write()/writelin()/open()/close()
+
+各种node类型：
+元素节点：Element 
+element.tagName; (总是输出大写。)
+
+HTMLElement: Element子类。 id, title, dir, className, etc. 所有公认的属性都可以这么获取，不需要用getAttribute()
+自定义属性最好加上 data-
+
+element.getAttribute()/set*/remove*
+变种：
+pNode.attributes.getNamedItem('id').nodeName/nodeValue --> 一般更多的用上面。但是可以遍历： pNode.attributes.length 
+node.attributes.specified --> 遍历中有用，为true表示是显式设置。
+
+document.createElement('div')
+
+元素子节点: 可能包括空白符之类的，遍历时记得判断node.nodeType
+
+Text类型 （nodeType = 3)
+node.nodeValue | node.data// 文本内容
+node.nodeValue = 'modified' //有html标签的话会被转义的说
+document.createTextNode(nodeValue)
+
+element.normalize() // 相反作用: element.firstChild.splitText(nodeValue)
+
+Comment类型: nodeType = 8， nodeValue = commentText, nodeName = '#comment', parentNode = Element or document
+
+DocumentType类型 （ie, chrome不支持）
+DocumentFragment (文档片段。很有用。插入文档片段时本身并不会插入。非常棒。算是一个优化。)
+
+Attr类型 （不推荐直接操作）
+
+NodeList， 和NamedNodeMap, HTMLCollection一样，是实时更新的，注意无限循环问题。
+应该尽量减少访问nodelist的次数，因为都将进行基于文档的查询。可以考虑将nodelist取得的值缓存起来。
 
