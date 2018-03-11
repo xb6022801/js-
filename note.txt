@@ -287,3 +287,96 @@ Attr类型 （不推荐直接操作）
 NodeList， 和NamedNodeMap, HTMLCollection一样，是实时更新的，注意无限循环问题。
 应该尽量减少访问nodelist的次数，因为都将进行基于文档的查询。可以考虑将nodelist取得的值缓存起来。
 
+/************************END OF CHAPTER 10 *********************************/
+第十一章 DOM扩展
+querySelector: 符合的第一个元素
+document.querySelector(): 基于文档查找
+DocumentFragement/Element.querySelector()：基于元素后代查找
+
+querySelectorAll(): runtime screenshot --> RETURN NodeList，
+matchesSelector(): 不同浏览器实现不同（p288）
+
+只选择元素节点
+nextElementSibling
+firstElementChild
+childElementCount
+
+HTML5
+getElementsByClassName(): 原生实现，有性能优势。： return NodeList （和getElementsByTagName等方法一样，有性能问题）
+可以通过这个方法为同一类集合添加事件等。
+
+classList (type: DOMTokenList): add/remove/contains/toggle //supported only by Firefox and chrome）
+
+HTMLDoment扩展
+document.activeElement //获得焦点元素
+document.hasFocus() //文档是否获得了焦点
+document.compatMode
+document.head
+
+document.charset
+document.defaultCharset
+
+自定义属性: data-*, 通过node.dataset来访问: dataset returns a DOMStringMap (name - value)
+
+innerHTML: 各种对其中脚本内容的严格限制，建议了解一下: p294 - p297
+outerHTML: 包括调用元素的html内容
+总之如果不带脚本内容的话还是不错的，比javascript执行效率高很多
+
+scrollIntoView(): 滚动页面(注： 没有滚动效果)
+
+文档模式: document mode: 决定了可以使用什么功能
+强制设置文档模式: X-UA-Compatible or <meta http-equiv='X-UA-Compatible' content='IE=IEVersion'>
+
+element.children (element children only): element.children.length == element.childElementCount;
+
+contains() 方法
+innerText // firefox 不兼容。但是有 textContent
+outerText // write时替换整个元素
+
+滚动： 除了HTML5纳入标准的scrollIntoView()以外，还有各个浏览器实现的自己的方法。但还是scrollIntoView()最常用。
+
+/************************END OF CHAPTER 11 *********************************/
+第12章 DOM2和DOM3
+
+关于命名空间的一些支持
+样式：
+任何支持style的html元素都有一个style属性，可以直接通过这个设置style， (type: CSSStyleDeclaration)
+node.style.background = blue
+node.style.csstext //返回设置的style属性。不返回class的赋值
+cssText是一次设置所有style最简便的方法。了解一下
+
+node.style.length
+node.style.item(index) //两者结合，用来遍历。
+
+document.defaultView.getComputedStyle(node, null) //返回计算样式， 只读。 IE不支持，但是有node.currentStyle返回计算样式
+getComputedStyle也会包括默认值，所以不用企图用遍历来获得显式设置的样式
+
+元素大小
+偏移量
+console.log(node.offsetLeft) ： 左边框到offsetParent左边框的距离
+console.log(node.offsetTop)
+console.log(node.offsetWidth) ：元素宽度，包括垂直方向滚动条宽度。border, margin
+console.log(node.offsetHeight)
+可以靠循环得到相对页面的偏移量。
+
+客户区：
+clientWidth/Height: 不包括border的宽度/高度 （element height + padding）
+常用case： 确定浏览器视口大小： document.documentElement.clientWidth || document.body.clientWidth (减去了body的border和margin)
+
+滚动大小
+scrollHeight/Width: 在没有滚动条的情况下，元素内容的总高度
+scrollLeft/Top
+
+在没有滚动条的前提下，scrollHeight和clientWidth一直
+在标准模式下，文档总高度是document.documentElement.scrollHeight, (IE7之前是document.body.scrollHeight)
+
+遍历：(IE8-不支持DOM遍历)
+document.createNodeIterator(rootNode, whatToShow, filter, entityReferenceExpansion: boolean) (DOM2.js)
+previousNode(), nextNode()
+
+TreeWalker是nodeiterator更高级的版本。(不一样的船新版本)，用于firstChild()/lastChild()/nextSibling/previousSibling/currentNode
+几个额外的方法，从而随心所欲的让遍历向不同方向移动。
+
+范围 （Range）
+
+
