@@ -379,4 +379,31 @@ TreeWalker是nodeiterator更高级的版本。(不一样的船新版本)，用�
 
 范围 （Range）
 
+/************************END OF CHAPTER 12 *********************************/
+第13章 事件
+事件冒泡 + 事件捕获
+行内js代码不能使用未转义html语法： & “” > <等： onclick="alert('clicked')"
+onclick="alert(this.value)" // this等于事件的目标元素
+onclick="alert(event.type)"
+如此行内js代码，可以直接访问全局作用域变量，如 document。以及如果当前元素是表单元素，则可以访问表单父元素（form）
+e.g. alert(username.value)
+
+DOM0级事件处理： node.onclick = function() {}， 移除： node.onclick = null
+DOM2级事件处理： addEventListener: 可以添加多个。 移除只能靠 removeEventListener, 参数必须相同，这意味着addEventListener
+添加的匿名函数不能删除
+
+IE添加事件： node.attachEvent / node.detachEvent: this = window
+event.stopPropagation // 阻止捕获或者冒泡
+event.currentTarget / target (事件的目标元素) / this: this = currentTarget (always. 正在处理的当前元素)
+event.eventPhase : 事件阶段 1 捕获 2 符合 3 冒泡
+
+IE中的event对象
+event.srcElement: 事件的目标元素
+event.returnValue: = event.preventDefault. 设置为false来阻止默认行为
+event.cancelBubble: = event.stopPropagation
+
+
+
+
+
 
