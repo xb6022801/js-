@@ -24,7 +24,7 @@ Array.from(lists).forEach(element => {
    element.setAttribute('style', 'background: green') // good
   // element.attributes.style = 'background: green' // wrong
    console.log(element.attributes.getNamedItem('style').nodeValue += ';background: blue') // good
-   element.style.background = 'blue'
+   element.style.background = 'blue' // good
 })
 
 //

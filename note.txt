@@ -438,13 +438,54 @@ mousewheel事件： event.wheelDelta +120x (向前滚) || -120(向后滚)
 keydown （按任意键位）| keypress (按字符) | keyup
 针对文本输入，有一个textInput事件。
 keydown, keyup : event.keyCode, event.charCode: keypress
+textInput事件： 类似keypress，但是只有在可编辑区域内按字符键才会触发。：event.data, event.inputMethod(support by IE only)
 
+变动事件：当DOM结构发生改变的时候触发：
+ DOMNodeRemoved: event.target = node to delete, event.relatedNode = parent node (触发事件时尚未删除。冒泡)， 
+ 同时触发其子节点及自身的DOMNodeRemovedFromDocument事件，不冒泡，最后触发parent node的DOMSubtreeModified事件。
+ DOMNodeInserted:
+event.target = node to add, event.relatedNode = parent node (触发事件时尚未加入。冒泡)， 
+ 同时触发其子节点及自身的DOMNodeInsertedIntoDocument事件，不冒泡，最后触发parent node的DOMSubtreeModified事件。
 
+HTML5事件
+contextMenu: 冒泡，所以可以指定一个document事件来处理。属于鼠标事件，所以包括光标信息，通常使用contextMenu来显示自定义菜单，用onclick
+事件来隐藏菜单
 
+beforeunload: 卸载window前询问用户是否卸载。必须event.returnValue = message, 然后 return message
 
+DOMContentLoaded: DOM结构完成后就触发。 对于不支持该事件的浏览器，可以设置一个setTimeout(fn, 0)
 
+pageshow和pagehide： (only supported by firefox and opera) 了解一下。
 
+hashchange事件： event.newURL, event.oldURL， 最好用location.hash
 
+设备事件：
+
+safari: orientationchange事件。 window.orientation: 0, 90 (向左横着)，-90(向右横着)
+了解一下: MozOrientation, deviceorientation, devicemotion, 
+
+触摸和手势事件 (书中主要针对的是ios)
+
+内存和性能：
+事件委托 (事件.js) 最适合事件委托的事件右: mousedown, mouseup, keypress, keydown, keyup
+移除事件处理程序： 1. 在移除DOM元素之前，记得移除绑定的事件，否则还保存在内存里。2. unload 页面时，也需要
+移除加载页面时绑定的事件。😪
+
+模拟事件
+document.createEvent() then document.dispatchEvent()
+事件类型: UIEvents, MouseEvents, MutationEvents, HTMLEvents
+
+模拟鼠标事件: document.createEvent('MouseEvents'), then event.initMouseEvent() then node.dispatchEvent()
+模拟键盘事件: document.createEvent('KeyboardEvent'), then event.initKeyboardEvent() then node.dispatchEvent()
+
+模拟其他事件: createEvent('MutationEvents') 等
+
+自定义事件： createEvent('CustomEvent'), then initCustomEvent()
+
+IE中的事件模拟： 不一样。document.createEventObject(), then customize event, then fireEvent().
+
+/************************END OF CHAPTER 13 *********************************/
+第16章： HTML5脚本编程
 
 
 
