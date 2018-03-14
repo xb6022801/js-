@@ -402,6 +402,50 @@ event.srcElement: 事件的目标元素
 event.returnValue: = event.preventDefault. 设置为false来阻止默认行为
 event.cancelBubble: = event.stopPropagation
 
+事件： UI, load/unload, error (on window if js error, on img if failing to load image, etc), abort, etc
+
+load, addEventListener or <body onload='event()'>, <img onload=''>
+
+unload: 使用case最多的是清除引用，避免内存泄漏
+resize/unload's event.target = document
+
+焦点事件： focus 不冒泡/focusin (冒泡)/blur/focusout
+
+鼠标事件：click/dbclick/mousedown (用户按下任意鼠标按钮)/mouseup(用户释放任意鼠标按钮)/
+mouseenter(光标移动到元素上，不冒泡)/mouseover(光标移动到元素上，冒泡 如果子元素触发，则父元素也触发了)
+mouseleave(不冒泡)/mouseout(冒泡)
+mousemove(在元素内部移动触发)/
+
+鼠标事件具有： clientX, clientY （客户区位置）| pageX, pageY （相对页面位置）|| screenX, screenY (相对屏幕的坐标)
+pageX = clientX + document.body.scrollLeft || document.documentElement.scrollLeft
+e.shiftKey || e.metaKey || e.ctrlKey || e.altKey : true/false
+
+click事件： event.button: 0 1 2(左键中键右键)
+
+mousewheel事件： event.wheelDelta +120x (向前滚) || -120(向后滚)
+
+触摸设备：不支持鼠标，
+- so没有dbclick事件
+- 轻击可单击元素触发mousemove事件，如果内容没变化则依次触发mousedown, mouseup, click事件。
+- 两个手指放屏幕上且页面随着手指移动而滚动会触发mousewheel和scroll事件。
+
+无障碍问题： 可以通过回车来触发click事件
+- 比起mousedown和mouseup，更推荐click处理事件，避免代码无法执行。
+- 不要用mouseover来向用户显示新的选项。
+- 不要用dbclick处理重要操作，键盘无法触发这个事件。
+
+键盘事件
+keydown （按任意键位）| keypress (按字符) | keyup
+针对文本输入，有一个textInput事件。
+keydown, keyup : event.keyCode, event.charCode: keypress
+
+
+
+
+
+
+
+
 
 
 
