@@ -487,8 +487,74 @@ IE中的事件模拟： 不一样。document.createEventObject(), then customize
 /************************END OF CHAPTER 13 *********************************/
 第16章： HTML5脚本编程
 
+XDM: cross-domain-message. 跨文档通信。postMessage(url, args)
+
+拖放事件
+被拖动元素： dragstart (ondragstart), drag, dragend
+当拖动到一个可被放置的目标时该目标： dragenter, dragover, dragleave | drop
+可以通过改写dragenter, dragleave的默认行为来将目标设置成可放置目标。
+
+dataTransfer：
+拖动开始，被拖动元素的数据被setData(type, data)，或者可以手动setData() drop的时候，被drop的元素getData()。
+type：或是短数据类型text|url，或者是text/plain|text/url-list。
+注： 一定先验证短类型，IE10之前不支持扩展的MIME类型。
+dataTransfer.dropEffect: 被拖动的元素能执行什么放置行为，在dragenter事件设置
+dataTransfer.effectAllowed: 表示允许被拖动元素的dropEffect，在dragstart事件设置
+
+默认就可以被拖动的元素： 图像，链接，被复制的文本。
+显式设置： draggable='true/false'
+
+媒体元素
+video, audio: 必须至少包括src (之后再了解)
+
+历史状态和管理：
+history.pushState(data, '', relativeUrl)
+window.addEventListener('popstate', fn) //按了 后退 键触发。
+更换当前状态： replaceState(data, relativeUrl): 和pushState的区别是不会更新历史状态栈
+
+/************************END OF CHAPTER 16 *********************************/
+第22章 高级技巧
+
+高级函数：
+一些高级技巧：
+1. 安全的类型检查。
+instanceof 必须对象在同一个全局作用域。如果不是就不行。解决办法，利用object.prototype.toString返回
+[object NativeConstructorName] (注： 只针对原生构造函数，对于自定义构造函数，永远返回[object Object])
+
+2. 作用域安全的构造函数 (2个例子，第二个解释了继承时会遇到的问题。 高级函数.js)
+   （普通的构造函数如果不new的话，会assign给window，因为this = window）
+
+3. 惰性载入函数 (高级函数.js)
+
+4. 函数绑定(高级函数.js)
+
+5. 函数柯里化 (高级函数.js): 用于创建已经设置好了一部分参数的函数，提供了强大的动态创建函数的功能
 
 
+防篡改对象
+es5定义了防篡改的方法。一旦定义，就不能修改了
+Object.preventExtensions(object)
+Object.isExtensible(obj)
+修改或者删除已有方法不受影响
+
+密封对象 (Object.seal(obj)): 与unextensible object相比，还不能删除属性和方法
+Object.isSealed() --> 也会影响到isExtensible() of course
+
+冻结对象：最为严格，甚至不能modify properties:
+Object.freeze(object)
+Object.isFrozen(object)
+
+以上3种模式，在严格模式下如果出错会报错。非严格模式下会静默失败。
 
 
+高级定时器： 
+setTimeout()和setInterval() 只是表示在规定时间后将代码插入执行队列。
+setInterval()可能会因此导致有一些被跳过。
 
+Yielding process: (高级函数.js)
+函数节流 (debounce)
+
+自定义事件(高级函数.js)
+拖放(拖放事件.js)
+
+/************************END OF CHAPTER 22 *********************************/
